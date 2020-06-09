@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
-    public void updateDate(Date date, Long id) {
+    public void updateDate(LocalDateTime date, Long id) {
          taskRepository.updateDate(date, id);
     }
 

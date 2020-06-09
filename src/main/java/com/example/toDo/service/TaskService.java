@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface TaskService {
 
     void updateDescr(String descr, Long id);
 
-    void updateDate(Date date, Long id);
+    void updateDate(LocalDateTime date, Long id);
 
     void updateType(Long id);
 

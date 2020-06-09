@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Transactional
     @Modifying
     @Query("update Task t set t.date = :date where t.id = :id")
-    void updateDate(@Param("date") Date date, @Param("id") Long id);
+    void updateDate(@Param("date") LocalDateTime date, @Param("id") Long id);
 
     @Transactional
     @Modifying

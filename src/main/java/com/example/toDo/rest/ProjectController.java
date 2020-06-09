@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class ProjectController {
 
     @PutMapping(value = "/updateDate/{id}")
     public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-                                                         Date date,
+                                                         LocalDateTime date,
                                              @PathVariable Long id) {
         try {
             projectService.updateDate(date, id);

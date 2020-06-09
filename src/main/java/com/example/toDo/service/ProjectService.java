@@ -2,6 +2,7 @@ package com.example.toDo.service;
 
 import com.example.toDo.entity.Project;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface ProjectService {
 
     void updateDescr(String descr, Long id);
 
-    void updateDate(Date date, Long id);
+    void updateDate(LocalDateTime date, Long id);
 
     void deleteProject(Long id);
 

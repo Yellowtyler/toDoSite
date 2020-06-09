@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +55,7 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
-    public void updateDate(Date date, Long id) {
+    public void updateDate(LocalDateTime date, Long id) {
         projectRepository.updateDate(date, id);
     }
 

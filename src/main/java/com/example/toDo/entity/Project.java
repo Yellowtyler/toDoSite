@@ -2,6 +2,8 @@ package com.example.toDo.entity;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -22,7 +24,7 @@ public class Project {
     private String descr;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDateTime date;
 
     @Column(name = "state", nullable = false)
     private Boolean state;
@@ -52,11 +54,11 @@ public class Project {
         this.descr = descr;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

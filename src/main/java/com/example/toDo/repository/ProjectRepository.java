@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Transactional
     @Modifying
     @Query("update Project p set p.date = :date where p.id = :id")
-    void updateDate(@Param("date") Date date, @Param("id") Long id);
+    void updateDate(@Param("date") LocalDateTime date, @Param("id") Long id);
 
 }
