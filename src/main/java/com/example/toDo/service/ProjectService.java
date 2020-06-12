@@ -3,7 +3,6 @@ package com.example.toDo.service;
 import com.example.toDo.entity.Project;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public interface ProjectService {

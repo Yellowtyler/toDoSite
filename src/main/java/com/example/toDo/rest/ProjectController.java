@@ -95,7 +95,8 @@ public class ProjectController {
 
         return ResponseEntity.ok("Project's been updated successfully!");
     }
-
+   // pattern = "yyyy-MM-dd'T'HH:mm"
+   // iso= DateTimeFormat.ISO.DATE_TIME
     @PutMapping(value = "/updateDate/{id}")
     public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
                                                          LocalDateTime date,

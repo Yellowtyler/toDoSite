@@ -1,5 +1,6 @@
 package com.example.toDo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -23,6 +24,7 @@ public class Project {
     @Column(name = "descr")
     private String descr;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "date")
     private LocalDateTime date;
 
