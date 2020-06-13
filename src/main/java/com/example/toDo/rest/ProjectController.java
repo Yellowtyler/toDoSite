@@ -2,16 +2,12 @@ package com.example.toDo.rest;
 
 
 import com.example.toDo.entity.Project;
-import com.example.toDo.entity.Task;
 import com.example.toDo.service.ProjectService;
-import com.example.toDo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -98,9 +94,7 @@ public class ProjectController {
    // pattern = "yyyy-MM-dd'T'HH:mm"
    // iso= DateTimeFormat.ISO.DATE_TIME
     @PutMapping(value = "/updateDate/{id}")
-    public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-                                                         LocalDateTime date,
-                                             @PathVariable Long id) {
+    public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime date, @PathVariable Long id) {
         try {
             projectService.updateDate(date, id);
         } catch(Exception exp) {

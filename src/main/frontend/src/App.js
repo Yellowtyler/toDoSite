@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 import {Login, Register} from "./components/login/index";
-//import { render } from 'node-sass';
 class App extends React.Component {
   
   constructor(props) {

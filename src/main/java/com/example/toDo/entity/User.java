@@ -1,9 +1,14 @@
 package com.example.toDo.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "login"),
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
 
    @Id
@@ -22,14 +27,23 @@ public class User {
    @Column(name = "email", nullable = false)
    private String email;
 
-   @Column(name = "role", nullable = false)
-   private String role;
+   @ManyToMany(fetch = FetchType.LAZY)
+   @JoinTable(name = "user_roles",
+           joinColumns = @JoinColumn(name = "user_id"),
+           inverseJoinColumns = @JoinColumn(name = "role_id"))
+   private Set<Role> roles = new HashSet<>();
 
    @Column(name = "active", nullable = false)
    private Boolean active;
 
    public User() {
 
+   }
+
+   public User(String login, String email, String password) {
+      this.login = login;
+      this.email = email;
+      this.password = password;
    }
 
 
@@ -65,12 +79,12 @@ public class User {
       this.email = email;
    }
 
-   public String getRole() {
-      return role;
+   public Set<Role> getRoles() {
+      return roles;
    }
 
-   public void setRole(String role) {
-      this.role = role;
+   public void setRoles(Set<Role> roles) {
+      this.roles = roles;
    }
 
    public Boolean getActive() {

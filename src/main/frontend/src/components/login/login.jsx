@@ -2,8 +2,6 @@ import React from "react";
 import loginImg from "../../login.jpg";
 
 export class Login extends React.Component {
-
-  
   render() {
     return <div className="base-container" ref = {this.props.containerRef}>
             <div className="header">Login</div>
