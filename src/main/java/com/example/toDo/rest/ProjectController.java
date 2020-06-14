@@ -6,10 +6,12 @@ import com.example.toDo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
@@ -17,10 +19,7 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
-//    @Autowired
-//    TaskService taskService;
-
-    @PostMapping(value = "/createProject")
+    @PostMapping("/createProject")
     public ResponseEntity<String> createProject(@RequestBody Project project) {
       try {
           projectService.createProject(project);
@@ -30,17 +29,17 @@ public class ProjectController {
       return  ResponseEntity.ok("Project's been created successfully!");
     }
 
-    @GetMapping(value = "/getAllProjects")
+    @GetMapping("/getAllProjects")
     public List<Project> getAllProjects() {
         return projectService.getAll();
     }
 
-    @GetMapping(value = "/getProjects/{id}")
+    @GetMapping("/getProjects/{id}")
     public List<Project> getUserProjects(@PathVariable Long id) {
         return projectService.getUserProjects(id);
     }
 
-    @PutMapping(value = "/updateState/{id}")
+    @PutMapping("/updateState/{id}")
     public ResponseEntity<String> updateStateProject(@PathVariable Long id) {
       try {
           projectService.updateProjectState(id);
@@ -50,17 +49,17 @@ public class ProjectController {
       return ResponseEntity.ok("Project's been updated successfully!");
     }
 
-    @GetMapping(value = "/getHiddenProjects/{id}")
+    @GetMapping("/getHiddenProjects/{id}")
     public List<Project> getUserHiddenProjects(@PathVariable Long id) {
         return projectService.getUserHiddenProjects(id);
     }
 
-    @GetMapping(value = "/getProject/{id}")
+    @GetMapping("/getProject/{id}")
     public Project getProject(@PathVariable Long id){
         return projectService.getProject(id);
     }
 
-    @DeleteMapping(value = "/deleteProject/{id}")
+    @DeleteMapping("/deleteProject/{id}")
     public ResponseEntity<String> deleteProject(@PathVariable Long id) {
         try {
             projectService.deleteProject(id);
@@ -70,7 +69,7 @@ public class ProjectController {
         return ResponseEntity.ok("Project's been deleted successfully!");
     }
 
-    @PutMapping(value="/updateName/{id}")
+    @PutMapping("/updateName/{id}")
     public ResponseEntity<String> updateName(@RequestBody String name, @PathVariable Long id) {
         try {
             projectService.updateName(name, id);
@@ -81,7 +80,7 @@ public class ProjectController {
         return ResponseEntity.ok("Project's been updated successfully!");
     }
 
-    @PutMapping(value = "/updateDescr/{id}")
+    @PutMapping("/updateDescr/{id}")
     public ResponseEntity<String> updateDescr(@RequestBody String descr, @PathVariable Long id) {
         try {
             projectService.updateDescr(descr, id);
@@ -93,7 +92,7 @@ public class ProjectController {
     }
    // pattern = "yyyy-MM-dd'T'HH:mm"
    // iso= DateTimeFormat.ISO.DATE_TIME
-    @PutMapping(value = "/updateDate/{id}")
+    @PutMapping("/updateDate/{id}")
     public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime date, @PathVariable Long id) {
         try {
             projectService.updateDate(date, id);
