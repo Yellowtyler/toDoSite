@@ -1,15 +1,20 @@
-import React from 'react';
-import './App.scss';
+import React, { useState, useEffect } from 'react';
 import {Login, Register} from "./components/login/index";
-class App extends React.Component {
-  
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+// import AuthenticatedRoute from './components/AuthenticatedRoute';
+// import UnauthenticatedRoute from './components/UnauthenticatedRoute';
+import Project from './components/project';
+import history from './history';
+import securityApi from "./api/securityApi";
+import './App.scss';
+export class App extends React.Component {
   constructor(props) {
      super(props);
      this.state = {
        isLoggingActive: true,
      }
   }
-
+    
   changeState() {
      const { isLoggingActive } = this.state;
      if(isLoggingActive) {
@@ -41,6 +46,7 @@ class App extends React.Component {
            />
        </div>
     </div>
+   
   );
   }
 }
@@ -54,3 +60,39 @@ const RightSide = props => {
 }
 
 export default App;
+// export default function App() {
+//   const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+//   useEffect(() => {
+//     onLoad();
+//   }, []);
+
+//   async function onLoad() {
+//     try {
+//       await securityApi.getCurrentUser();
+//       userHasAuthenticated(true);
+//     } catch (e) {
+//       alert(e);
+//     }
+//   }
+
+//   return (
+//       <Router>
+//       <Switch>
+//         <UnauthenticatedRoute
+//           exact path="/"
+//           component={HomePage}
+//           appProps={{ isAuthenticated }}
+//         />
+//         <AuthenticatedRoute
+//           path="/projects"
+//           component={Project}
+//           appProps={{ isAuthenticated }}
+//         />
+//       </Switch>
+//       </Router>
+   
+//   );
+// }
+ 
+
