@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Project from './components/project';
+import Project from './components/project-page';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import history from './history';
 ReactDOM.render(
@@ -14,7 +14,7 @@ ReactDOM.render(
   <Router  history={history}>
   <Switch>
    <Route exact path="/" component={App} />
-   <Route path="/project" component={Project} />
+   <Route exact path="/project" component={Project} />
  </Switch>
  </Router>,
   document.getElementById('root')

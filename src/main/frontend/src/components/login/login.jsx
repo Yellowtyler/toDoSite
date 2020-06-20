@@ -48,9 +48,7 @@ export class Login extends React.Component {
     });
 
     this.form.validateAll();
-    console.log(this.state.username);
     if (this.checkBtn.context._errors.length === 0) {
-     // console.log(this.state.username);
       securityApi.login(this.state.username,
         this.state.password).then(
           () => {

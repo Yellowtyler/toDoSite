@@ -60,7 +60,7 @@ public class ProjectController {
         return projectService.getUserHiddenProjects(id);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/getProject/{id}")
     public Project getProject(@PathVariable Long id){
         return projectService.getProject(id);

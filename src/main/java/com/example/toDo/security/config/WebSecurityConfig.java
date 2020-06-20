@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               // .antMatchers("/api/project/**","/api/task/**").authenticated()
                // .antMatchers("/project","settings").authenticated()
                 .antMatchers("/","index","/api/auth/**").permitAll()
-                .antMatchers("/api/project/**","/api/task/**").permitAll()
+                .antMatchers("/api/project/**","/api/task/**").hasRole("USER")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 

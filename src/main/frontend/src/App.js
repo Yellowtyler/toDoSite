@@ -3,7 +3,7 @@ import {Login, Register} from "./components/login/index";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import AuthenticatedRoute from './components/AuthenticatedRoute';
 // import UnauthenticatedRoute from './components/UnauthenticatedRoute';
-import Project from './components/project';
+import Project from './components/project-page';
 import history from './history';
 import securityApi from "./api/securityApi";
 import './App.scss';

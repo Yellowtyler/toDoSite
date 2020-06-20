@@ -3,7 +3,7 @@ import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:8080/api/project/';
 
-class projetApi {
+class projectApi {
     createProject(name, descr, date, state) {
         return axios.post(API_URL+"createProject", 
         {headers: authHeader(), 
@@ -11,7 +11,10 @@ class projetApi {
     }
 
     getProjects(id) {
-        return axios.get(API_URL+"getProjects/${id}", 
+        return axios.get(API_URL+"getProjects/" + id, 
         {headers: authHeader()});
     }
+  
 }
+
+export default new projectApi();
