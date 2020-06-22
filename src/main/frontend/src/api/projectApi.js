@@ -10,11 +10,11 @@ class projectApi {
             name, descr, date, state});
     }
 
-    getProjects(id) {
+    getProjects(id) { 
         return axios.get(API_URL+"getProjects/" + id, 
-        {headers: authHeader()});
-    }
-  
+        {headers: authHeader()})
+        .then(res => {return res.data});
+    } 
 }
 
 export default new projectApi();

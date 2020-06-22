@@ -2,6 +2,7 @@ package com.example.toDo.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Task {
     @Column(name = "state", nullable = false)
     private Boolean state;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn//(name = "project_id")
