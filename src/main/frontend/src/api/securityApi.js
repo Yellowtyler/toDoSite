@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import fetch from 'node-fetch';
 const API_URL = 'http://localhost:8080/api/auth/';
 
 class securityApi {
