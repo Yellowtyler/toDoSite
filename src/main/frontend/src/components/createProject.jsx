@@ -5,47 +5,54 @@ import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from "@date-io/date-fns";
 import authHeader from '../api/auth-header';
-import {DatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import {DatePicker, DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import axios from 'axios';
 import securityApi from '../api/securityApi';
+
 const CreateProjectForm = (props) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState(null);
-  const [active, setActive] = useState(true);
+  const [date, setDate] = useState(new Date());
   const [user, setUser] = useState(securityApi.getCurrentUser());
-
+  const today = new Date();
   const createProject = (e) => {
     e.preventDefault();
-    const project = {name: name, descr: description, date: date, active: active, user: user.id};
-    axios.post('http://localhost:8080/api/project/createProject', 
-    {headers: authHeader(), project})
+    const project = {name: name, descr: description, date: date.toLocaleString(), username: user.username};
+    axios.post('http://localhost:8080/api/project/createProject', project,
+    {headers: authHeader()})
     .then(res => res.data);
+    window.location.reload();
   };
 
   return (
       <div className = "form-container">
         <form onSubmit={createProject}>
+            <div>
               <TextField 
               id="standard-basic" 
               label="Name" 
               value={name} 
               onChange={e=>setName(e.target.value)}
               />
-              
+            </div>
+            <div>
               <TextField 
               id="standard-basic" 
               label="Description" 
               value={description}
               onChange={e=>setDescription(e.target.value)}
               />
-             
+            </div>
+            <div>  
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker/>
+              <DateTimePicker value={date} onChange={setDate} minDate={today} ampm={false}/>
               </MuiPickersUtilsProvider>
-            
+            </div>  
+            <div>
               <Button type="submit">Create</Button> 
+            </div>
         </form>
+      
       </div>
   );
 
