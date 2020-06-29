@@ -13,14 +13,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-
 @RequestMapping("/api/project")
 public class ProjectController {
 
     @Autowired
     ProjectService projectService;
 
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/createProject")
     public ResponseEntity<String> createProject(@RequestBody Project project) {
       try {
@@ -60,7 +59,7 @@ public class ProjectController {
         return projectService.getUserHiddenProjects(id);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/getProject/{id}")
     public Project getProject(@PathVariable Long id){
         return projectService.getProject(id);
