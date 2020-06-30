@@ -4,6 +4,7 @@ import securityApi from '../api/securityApi';
 import projectApi from '../api/projectApi';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import history from '../history';
 import ProjectForm from './projectForm';
 import styles from './projectPage.module.css';
@@ -15,7 +16,9 @@ const Project = (props) => {
   const [projects, setProjects] = useState([]);
   const [projectId, setProjectId] = useState(-1);
   const [deleteActive, setDeleteActive] = useState(false);
+  const [checked, setChecked] = useState(false);
   const alert = useAlert();
+  const API_URL = 'http://localhost:8080/api/project';
 
   useEffect(() => {
     if(user===null) {
@@ -26,7 +29,7 @@ const Project = (props) => {
     else {
       if(user.roles[0].includes('ROLE_ADMIN') || user.roles[0].includes('ROLE_USER')) {
         axios
-        .get('http://localhost:8080/api/project/getProjects/' + user.id, {headers: authHeader()})
+        .get(API_URL + '/getProjects/' + user.id, {headers: authHeader()})
         .then(res => {
             console.log(res);
             setProjects(res.data);
@@ -57,6 +60,19 @@ const Project = (props) => {
       ]});
   };
 
+  const completeProject = (e, projectId) => {
+    e.preventDefault();
+    projectApi.updateState(projectId);
+  }
+
+  const showAllProjects = (e) => {
+    e.preventDefault();
+    axios.get(API_URL+'/getHiddenProjects/' + user.id,
+    {headers: authHeader()})
+    .then(res => {
+      setProjects(res.data);
+    })
+  }
   const logout = (e) => {
     e.preventDefault();
     securityApi.logout();
@@ -74,16 +90,16 @@ const Project = (props) => {
         <ul>
           {projects.map(item => (
             <li>
+            <Checkbox checked={!item.state} onChange={e=>completeProject(e, item.id)}></Checkbox>
             <Button onClick={openProject(item.id)} >{item.name}</Button>
             {deleteActive && <Button onClick={e => deleteProject(e, item.id)}>x</Button>}
             </li>
           ))}
-         
-            <Button onClick={openProject(-1)}>Add new project</Button>
           
-        </ul> 
+        </ul>
+        <Button onClick={openProject(-1)}>Add new project</Button> 
         <div>
-          <Button>Show all projects!</Button>
+          <Button onClick={e => showAllProjects(e)}>Show all projects!</Button>
           <Button onClick={()=>setDeleteActive(!deleteActive)} className={styles.deleteBtn}>
             <img src={trashIcon} alt="" style={styles.img}/>
           </Button>
