@@ -72,6 +72,7 @@ public class ProjectController {
         return projectService.getUserProjects(id);
     }
 
+    //TODO: исправить 401 ошибку при запросе
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/updateState/{id}")
     public ResponseEntity<String> updateStateProject(@PathVariable Long id) {

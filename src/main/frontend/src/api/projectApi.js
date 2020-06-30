@@ -23,7 +23,7 @@ class projectApi {
         return axios.put(API_URL + "/updateState/" + id,
         {headers: authHeader()})
         .then(res=>
-            console.log(res));
+            console.log(res.data));
     }
 }
 

@@ -19,8 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -61,8 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","index","/api/auth/**").permitAll()
                 .antMatchers("/api/project/**","/api/task/**").permitAll()//.hasRole("USER")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated();
-
+                .anyRequest().authenticated()
+                .and().formLogin().disable();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

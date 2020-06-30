@@ -60,9 +60,11 @@ const Project = (props) => {
       ]});
   };
 
-  const completeProject = (e, projectId) => {
+  const completeProject = (e, project) => {
     e.preventDefault();
-    projectApi.updateState(projectId);
+    project.state = !project.state;
+    projectApi.updateState(project.id);
+    window.location.reload();
   }
 
   const showAllProjects = (e) => {
@@ -90,8 +92,8 @@ const Project = (props) => {
         <ul>
           {projects.map(item => (
             <li>
-            <Checkbox checked={!item.state} onChange={e=>completeProject(e, item.id)}></Checkbox>
-            <Button onClick={openProject(item.id)} >{item.name}</Button>
+            <Checkbox checked={!item.state} onChange={e=>completeProject(e, item)}/>
+            <Button onClick={openProject(item.id)}>{item.name}</Button>
             {deleteActive && <Button onClick={e => deleteProject(e, item.id)}>x</Button>}
             </li>
           ))}
