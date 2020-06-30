@@ -2,6 +2,8 @@ package com.example.toDo.rest;
 
 import com.example.toDo.entity.Task;
 import com.example.toDo.service.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/task")
 public class TaskController {
+    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+
     @Autowired
     private TaskService taskService;
 

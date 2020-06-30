@@ -8,20 +8,29 @@ import authHeader from '../api/auth-header';
 import {DatePicker, DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import axios from 'axios';
 import securityApi from '../api/securityApi';
-
+import { useAlert } from "react-alert";
 const CreateProjectForm = (props) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
   const [user, setUser] = useState(securityApi.getCurrentUser());
   const today = new Date();
+  const {projectsCount} = props;
+  const alert = useAlert();
+
   const createProject = (e) => {
     e.preventDefault();
+    console.log(projectsCount);
+    if(projectsCount >= 7) {
+        alert.show("Error! You can have maximum 7 active projects! Complete one of them and then create a new one.");
+    }
+    else {
     const project = {name: name, descr: description, date: date.toLocaleString(), username: user.username};
     axios.post('http://localhost:8080/api/project/createProject', project,
     {headers: authHeader()})
     .then(res => res.data);
     window.location.reload();
+    }
   };
 
   return (

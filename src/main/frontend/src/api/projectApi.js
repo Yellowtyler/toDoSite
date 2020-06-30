@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import authHeader from './auth-header';
-
+import axios from 'axios';
 const API_URL = 'http://localhost:8080/api/project/';
 
 class projectApi {
@@ -23,6 +23,13 @@ class projectApi {
               console.log(res)
         )
     } 
+
+    deleteProject(id) {
+        return axios.delete(API_URL + "deleteProject/" + id,
+        {headers: authHeader()})
+        .then(res=>
+            console.log(res.data));
+    }
 }
 
 export default new projectApi();

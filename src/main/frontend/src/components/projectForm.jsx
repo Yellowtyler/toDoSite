@@ -7,12 +7,12 @@ import history from '../history';
 import CreateProjectForm from './createProject';
 
 const ProjectForm = (props) => {
-    const {projectId} = props;
-
+    const {projectId, projectsCount} = props;
+    
     return (
       <div>
         {projectId === -1? 
-         (<CreateProjectForm/>) :
+         (<CreateProjectForm projectsCount={projectsCount}/>) :
          (<h1>PROJECTFORM</h1>)
         }
       </div>  

@@ -7,7 +7,6 @@ import securityApi from "../../api/securityApi";
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import history from "../../history";
 
-
 const required = value => {
   if (!value) {
     return (
@@ -93,7 +92,6 @@ export class Login extends React.Component {
                 onChange={this.OnChangeUsername.bind(this)}
                 validations={[required]}
                 />
-                <p>{this.state.username}</p>
               </div> 
               <div className="form-group"> 
                 <label htmlFor="password">Password</label>

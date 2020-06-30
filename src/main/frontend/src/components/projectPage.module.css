@@ -1,0 +1,18 @@
+.containerLeft {
+    float:left;
+    color: rgb(26, 110, 179);
+}
+.containerRight {
+    float:right;
+    
+}
+
+.deleteBtn {
+
+    width: 10%;
+}
+
+img {
+       width:50%;
+       height:50%;
+}

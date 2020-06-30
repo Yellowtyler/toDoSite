@@ -30,7 +30,7 @@ public class ProjectController {
     @Autowired
     UserRepository userRepository;
 
-    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/createProject")
     public ResponseEntity<String> createProject(@RequestBody String projectJson) {
       try {
@@ -52,7 +52,9 @@ public class ProjectController {
               project.setDate(localDateTime);
           }
           projectService.createProject(project);
+          logger.info("Project " +project.getName() + " was successfully inserted!");
       } catch (Exception exp) {
+          logger.error("Request /createProject failed. Error: " + exp.getMessage());
           return ResponseEntity.badRequest().body(exp.getMessage());
       }
       return  ResponseEntity.ok("Project's been created successfully!");
@@ -76,6 +78,7 @@ public class ProjectController {
       try {
           projectService.updateProjectState(id);
       } catch(Exception exp) {
+          logger.error("Request /updateState failed. Error: " + exp.getMessage());
           return ResponseEntity.badRequest().body(exp.getMessage());
       }
       return ResponseEntity.ok("Project's been updated successfully!");
@@ -99,6 +102,7 @@ public class ProjectController {
         try {
             projectService.deleteProject(id);
         } catch(Exception exp) {
+            logger.error("Request /deleteProject failed. Error: " + exp.getMessage());
             return ResponseEntity.badRequest().body(exp.getMessage());
         }
         return ResponseEntity.ok("Project's been deleted successfully!");
@@ -110,6 +114,7 @@ public class ProjectController {
         try {
             projectService.updateName(name, id);
         } catch(Exception exp) {
+            logger.error("Request /updateName failed. Error: " + exp.getMessage());
             return ResponseEntity.badRequest().body(exp.getMessage());
         }
 
@@ -122,6 +127,7 @@ public class ProjectController {
         try {
             projectService.updateDescr(descr, id);
         } catch(Exception exp) {
+            logger.error("Request /updateDescr failed. Error: " + exp.getMessage());
             return ResponseEntity.badRequest().body(exp.getMessage());
         }
 
@@ -131,10 +137,11 @@ public class ProjectController {
    // iso= DateTimeFormat.ISO.DATE_TIME
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/updateDate/{id}")
-    public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime date, @PathVariable Long id) {
+    public ResponseEntity<String> updateDate(@RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") LocalDateTime date, @PathVariable Long id) {
         try {
             projectService.updateDate(date, id);
         } catch(Exception exp) {
+            logger.error("Request /updateDate failed. Error: " + exp.getMessage());
             return ResponseEntity.badRequest().body(exp.getMessage());
         }
         return ResponseEntity.ok("Project's been updated successfully!");
