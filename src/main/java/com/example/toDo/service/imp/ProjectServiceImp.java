@@ -65,6 +65,11 @@ public class ProjectServiceImp implements ProjectService {
     }
 
     @Override
+    public void updateProject(Project project, Long id) {
+        projectRepository.updateProject(project, id);
+    }
+
+    @Override
     public List<Project> getAll() {
         return projectRepository.findAll();
     }

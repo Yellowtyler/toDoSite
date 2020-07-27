@@ -22,7 +22,6 @@ const Project = (props) => {
 
   useEffect(() => {
     if(user===null) {
-      console.log(user);
       history.push("/");
       window.location.reload();
     } 
@@ -39,6 +38,7 @@ const Project = (props) => {
         window.open('/error');
       }
     }
+    console.log(user);
   }, []);
 
   const openProject = (projectId) => () => {
@@ -63,7 +63,17 @@ const Project = (props) => {
   const completeProject = (e, project) => {
     e.preventDefault();
     project.state = !project.state;
-    projectApi.updateState(project.id);
+    //projectApi.updateState(project.id);
+    // axios.post(API_URL + "/updateState/" + project.id,
+    // {headers: authHeader()})
+    // .then(res=>
+    //     console.log(res.data))
+    // .catch(e => console.log(e));
+    const projectUpdate = {id: project.id, name: project.name, descr: project.descr, date: project.date.toLocaleString(), state: project.state, username: user.username};
+    axios.post('http://localhost:8080/api/project/createProject', projectUpdate,
+    {headers: authHeader()})
+    .then(res => res.data);
+
     window.location.reload();
   }
 

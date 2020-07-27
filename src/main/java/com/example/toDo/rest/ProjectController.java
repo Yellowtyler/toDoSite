@@ -22,8 +22,8 @@ import java.util.Optional;
 @RequestMapping("/api/project")
 public class ProjectController {
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-
+    private static final DateTimeFormatter formatterCreate = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    private static final DateTimeFormatter formatterUpdate = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     @Autowired
     ProjectService projectService;
 
@@ -38,21 +38,34 @@ public class ProjectController {
           Optional<User> user = userRepository.findByLogin(jsonObject.getString("username"));
           Project project = new Project();
           project.setUser(user.get());
-          project.setState(true);
           project.setName(jsonObject.getString("name"));
           project.setDescr(jsonObject.getString("descr"));
-          System.out.println(jsonObject.getString("date"));
           if(jsonObject.get("date") == JSONObject.NULL) {
               project.setDate(null);
           } else {
               String dateStr = jsonObject.getString("date");
-              dateStr = dateStr.substring(0, dateStr.length()-3);
-              dateStr = dateStr.replace(",","");
-              LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
+              LocalDateTime localDateTime = null;
+              if(!jsonObject.has("id")) {
+                  dateStr = dateStr.substring(0, dateStr.length() - 3);
+                  dateStr = dateStr.replace(",","");
+                  localDateTime = LocalDateTime.parse(dateStr, formatterCreate);
+
+              } else {
+                  localDateTime = LocalDateTime.parse(dateStr, formatterUpdate);
+              }
               project.setDate(localDateTime);
           }
-          projectService.createProject(project);
-          logger.info("Project " +project.getName() + " was successfully inserted!");
+          if(!jsonObject.has("id")) {
+              project.setState(true);
+              projectService.createProject(project);
+              logger.info("Project " + project.getName() + " was successfully inserted!");
+          } else {
+              project.setState(jsonObject.getBoolean("state"));
+              project.setId(Long.valueOf(String.valueOf(jsonObject.get("id"))));
+              projectService.updateProject(project, project.getId());
+              logger.info("Project " + project.getName() + " was successfully updated!");
+          }
+
       } catch (Exception exp) {
           logger.error("Request /createProject failed. Error: " + exp.getMessage());
           return ResponseEntity.badRequest().body(exp.getMessage());
@@ -70,19 +83,6 @@ public class ProjectController {
     @GetMapping("/getProjects/{id}")
     public List<Project> getUserProjects(@PathVariable Long id) {
         return projectService.getUserProjects(id);
-    }
-
-    //TODO: исправить 401 ошибку при запросе
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @PutMapping("/updateState/{id}")
-    public ResponseEntity<String> updateStateProject(@PathVariable Long id) {
-      try {
-          projectService.updateProjectState(id);
-      } catch(Exception exp) {
-          logger.error("Request /updateState failed. Error: " + exp.getMessage());
-          return ResponseEntity.badRequest().body(exp.getMessage());
-      }
-      return ResponseEntity.ok("Project's been updated successfully!");
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -107,6 +107,18 @@ public class ProjectController {
             return ResponseEntity.badRequest().body(exp.getMessage());
         }
         return ResponseEntity.ok("Project's been deleted successfully!");
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/updateState")
+    public ResponseEntity<String> updateState(@RequestBody Long id) {
+        try {
+            projectService.updateProjectState(id);
+        } catch(Exception exp) {
+            logger.error("Request /updateState failed. Error: " + exp.getMessage());
+            return ResponseEntity.badRequest().body(exp.getMessage());
+        }
+        return ResponseEntity.ok("Project's been updated successfully!");
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
